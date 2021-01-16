@@ -19,6 +19,7 @@
 package com.ingeint.component;
 
 import com.ingeint.base.CustomProcessFactory;
+import com.ingeint.process.GenBankLoanFees;
 
 /**
  * Process Factory
@@ -36,6 +37,7 @@ public class ProcessFactory extends CustomProcessFactory {
 	 */
 	@Override
 	protected void initialize() {
+		registerProcess(GenBankLoanFees.class);
 	}
 
 }

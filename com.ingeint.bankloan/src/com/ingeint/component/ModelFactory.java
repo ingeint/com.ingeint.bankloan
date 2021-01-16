@@ -19,6 +19,8 @@
 package com.ingeint.component;
 
 import com.ingeint.base.CustomModelFactory;
+import com.ingeint.model.MBankLoan;
+import com.ingeint.model.MBankLoanLine;
 
 /**
  * Model Factory
@@ -28,7 +30,7 @@ public class ModelFactory extends CustomModelFactory {
 	/**
 	 * For initialize class. Register the models to build
 	 * 
-	 * <pre>
+ 	 * <pre>
 	 * protected void initialize() {
 	 * 	registerModel(MTableExample.Table_Name, MTableExample.class);
 	 * }
@@ -36,6 +38,8 @@ public class ModelFactory extends CustomModelFactory {
 	 */
 	@Override
 	protected void initialize() {
+		registerModel(MBankLoan.Table_Name, MBankLoan.class);
+		registerModel(MBankLoanLine.Table_Name, MBankLoanLine.class);
 	}
 
 }
