@@ -65,7 +65,6 @@ public class MBankLoan extends X_ING_BankLoan implements DocAction, DocOptions {
 
 	public MBankLoan(Properties ctx, ResultSet rs, String trxName) {
 		super(ctx, rs, trxName);
-		// TODO Auto-generated constructor stub
 	}
 
 	/** Process Message */
