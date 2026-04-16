@@ -23,7 +23,7 @@ import org.compiere.util.KeyNamePair;
 
 /** Generated Interface for ING_BankLoan
  *  @author iDempiere (generated) 
- *  @version Release 5.1
+ *  @version Release 11
  */
 @SuppressWarnings("all")
 public interface I_ING_BankLoan 
@@ -32,7 +32,7 @@ public interface I_ING_BankLoan
     /** TableName=ING_BankLoan */
     public static final String Table_Name = "ING_BankLoan";
 
-    /** AD_Table_ID=1000058 */
+    /** AD_Table_ID=1000202 */
     public static final int Table_ID = MTable.getTable_ID(Table_Name);
 
     KeyNamePair Model = new KeyNamePair(Table_ID, Table_Name);
@@ -137,6 +137,17 @@ public interface I_ING_BankLoan
 
 	public org.compiere.model.I_C_Charge getC_Charge() throws RuntimeException;
 
+    /** Column name C_DocTypePayment_ID */
+    public static final String COLUMNNAME_C_DocTypePayment_ID = "C_DocTypePayment_ID";
+
+	/** Set C_DocTypePayment_ID	  */
+	public void setC_DocTypePayment_ID (int C_DocTypePayment_ID);
+
+	/** Get C_DocTypePayment_ID	  */
+	public int getC_DocTypePayment_ID();
+
+	public org.compiere.model.I_C_DocType getC_DocTypePayment() throws RuntimeException;
+
     /** Column name C_DocTypeTarget_ID */
     public static final String COLUMNNAME_C_DocTypeTarget_ID = "C_DocTypeTarget_ID";
 
@@ -166,6 +177,15 @@ public interface I_ING_BankLoan
 	public int getC_DocType_ID();
 
 	public org.compiere.model.I_C_DocType getC_DocType() throws RuntimeException;
+
+    /** Column name CreateLines */
+    public static final String COLUMNNAME_CreateLines = "CreateLines";
+
+	/** Set CreateLines	  */
+	public void setCreateLines (String CreateLines);
+
+	/** Get CreateLines	  */
+	public String getCreateLines();
 
     /** Column name Created */
     public static final String COLUMNNAME_Created = "Created";
@@ -296,6 +316,17 @@ public interface I_ING_BankLoan
 
 	/** Get ING_BankLoan_UU	  */
 	public String getING_BankLoan_UU();
+
+    /** Column name ING_DocTypeReceipt_ID */
+    public static final String COLUMNNAME_ING_DocTypeReceipt_ID = "ING_DocTypeReceipt_ID";
+
+	/** Set Document Type for Receipt	  */
+	public void setING_DocTypeReceipt_ID (int ING_DocTypeReceipt_ID);
+
+	/** Get Document Type for Receipt	  */
+	public int getING_DocTypeReceipt_ID();
+
+	public org.compiere.model.I_C_DocType getING_DocTypeReceipt() throws RuntimeException;
 
     /** Column name InterestPercent */
     public static final String COLUMNNAME_InterestPercent = "InterestPercent";

@@ -68,7 +68,6 @@ import org.compiere.model.MUser;
 import org.compiere.model.MUserMail;
 import org.compiere.model.Query;
 import org.compiere.process.DocAction;
-import org.compiere.util.CLogger;
 import org.compiere.util.DB;
 import org.compiere.util.EMail;
 import org.compiere.util.Env;
@@ -79,8 +78,6 @@ import com.ingeint.model.MBankLoan;
 import com.ingeint.model.MBankLoanLine;
 
 public class IngeintUtils {
-
-	private static CLogger log = CLogger.getCLogger(IngeintUtils.class);
 
 	/**
 	 * Send Messages
@@ -326,6 +323,68 @@ public class IngeintUtils {
 		return payment;
 	}
 
+	/**
+	 * @author José Castañeda
+	 * @param ctx
+	 * @param loan
+	 * @param loanLine
+	 * @param type
+	 * @param amt
+	 * @param description
+	 * @param trxName
+	 * @return
+	 */
+	public static MPayment createPayment(Properties ctx, MBankLoan loan, MBankLoanLine loanLine
+			, String type, BigDecimal amt, String description, boolean interest, String trxName) {
+
+		MBankAccount ba = new MBankAccount(ctx, loan.getC_BankAccount_ID(), trxName);
+		MPayment payment = new MPayment(null, 0, trxName);
+
+		int C_BPartner_ID = ba.get_ValueAsInt("C_BPartner_ID");
+		
+		if(C_BPartner_ID <= 0)
+			throw new AdempiereException("@C_BankAccount_ID@: @Invalid@ @C_BPartner_ID@");
+		
+		payment.setAD_Org_ID(loan.getAD_Org_ID());
+		payment.setDateAcct(loan.getDateAcct());
+		payment.setC_BPartner_ID(C_BPartner_ID);
+		payment.setC_BankAccount_ID(ba.get_ID());
+		payment.setDateTrx(loan.getDateAcct());
+		payment.setTenderType(type);
+		payment.setDescription(description);
+		payment.setC_Currency_ID(ba.getC_Currency_ID());
+
+		if (loanLine != null) {
+			payment.setPayAmt(amt);
+			
+			if(interest) {
+				
+				int C_ChargeForInterest_ID = loanLine.getC_ChargeForInterest_ID();
+				
+				if(C_ChargeForInterest_ID <= 0)
+					throw new AdempiereException("@Invalid@ @C_ChargeForInterest_ID@");
+					
+				payment.setC_Charge_ID(C_ChargeForInterest_ID);
+				
+			} else 
+				payment.setC_Charge_ID(loan.getC_Charge_ID());
+			
+			payment.set_ValueOfColumn("ING_BankLoanLine_ID", loanLine.get_ID());
+			payment.setDescription(loanLine.getHelp());
+			payment.setC_DocType_ID(loan.getC_DocTypePayment_ID());
+		} else {
+			payment.setC_DocType_ID(loan.getING_DocTypeReceipt_ID());
+			payment.setPayAmt(loan.getAmount());
+			payment.setC_Charge_ID(loan.getC_Charge_ID());
+			payment.set_ValueOfColumn("ING_BankLoan_ID", loan.get_ID());
+			payment.setDescription(loan.getHelp());
+		}
+
+		payment.saveEx();
+
+		return payment;
+	}
+	
 	public static File genFileProdubancoPayroll(Integer HR_PaymentSelection_ID, String DocumentNo, String trx)
 			throws SQLException, IOException {
 

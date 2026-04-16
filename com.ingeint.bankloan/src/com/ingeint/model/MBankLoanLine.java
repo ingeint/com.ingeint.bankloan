@@ -33,7 +33,6 @@ import java.util.Properties;
 
 import org.compiere.util.DB;
 
-
 public class MBankLoanLine extends X_ING_BankLoanLine {
 	
 	/**
@@ -49,7 +48,6 @@ public class MBankLoanLine extends X_ING_BankLoanLine {
 
 	public MBankLoanLine(Properties ctx, ResultSet rs, String trxName) {
 		super(ctx, rs, trxName);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void setHeaderInfo(MBankLoan mBankLoan) {
@@ -57,9 +55,6 @@ public class MBankLoanLine extends X_ING_BankLoanLine {
 	}
 
 	public static void deleteLines(MBankLoan loan) {
-		
-		DB.getSQLValue(loan.get_TrxName(), "DELETE FROM "
-				+ "ING_BankLoanLine WHERE ING_BankLoan_ID = ? ",loan.get_ID());
-		
+		DB.executeUpdate("DELETE FROM ING_BankLoanLine WHERE ING_BankLoan_ID = ? ", loan.get_TrxName(), loan.get_ID());
 	}
 }
